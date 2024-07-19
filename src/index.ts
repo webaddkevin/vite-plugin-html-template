@@ -158,7 +158,8 @@ export default function htmlTemplate(userOptions: UserOptions = {}): Plugin {
         const resolve = (p: string) => path.resolve(root, p)
 
         // 1. move src/*.html to dest root
-        if (shell.test('-e', resolve(`${dest}/${PREFIX}/*.html`)))
+
+        if (!isWin32 || shell.test('-e', resolve(`${dest}/${PREFIX}/*.html`)))
           shell.mv(resolve(`${dest}/${PREFIX}/*.html`), resolve(dest))
         // 2. remove empty src dir
         shell.rm('-rf', resolve(`${dest}/${PREFIX}`))
